@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script>
+
+function browse_elements(start, output_id) {
+    //get the element to browse
+    var elements = start.children;
+    var output = document.getElementById(output_id);    
+    for (var i = 0; i < elements.length; i++) {
+        output.innerHTML += "Found element:" + elements[i].tagName + " with id: " + elements[i].id + "<br />"
+        browse_elements(elements[i], output_id);
+    }
+document.getElementById('clear_button').disabled = 0  //if there's something to clear
+}
+
+function add_elements(start, output_list) {
+   
+     //get the element to browse
+    var elements = start.children;
+   
+     //iterates through children
+    for (var i = 0; i < elements.length; i++) {
+
+        //create list item element
+        var li_element = document.createElement('li');
+
+        // create a text node
+        var text_element = document.createTextNode("Found element:" + elements[i].tagName +
+              " with id: " + elements[i].id);
+
+        // appedn text to li
+        li_element.appendChild(text_element);
+
+        // append li to output list
+        output_list.appendChild(li_element);
+
+        // go for recurency
+        add_elements(elements[i], output_list);
+    }
+  document.getElementById('clear_button').disabled = 0 // if there's something to clear
+}
+
+function clearadd_elements(output_list) {
+    
+var list =   document.getElementById('out_list')
+
+ if(!list.firstChild){     // if there's no element in the list
+	alert("There's nothing to clear in  Browsed Elements !")
+}
+
+    while(list.hasChildNodes()) {   //when list has children
+    list.removeChild(list.firstChild);
+    }
+
+}
+
+
+function clearbrowse_elements(output) {
+        
+var list =   document.getElementById('output')
+
+ if(!list.firstChild){ // if there's no element in the list
+	alert("There's nothing to clear in  Browsed Elements !")
+}
+
+    while(list.hasChildNodes()) {   //when list has children
+    list.removeChild(list.firstChild);
+    }
+}   
+
+
+function clearall_elements(out_list, output){
+	 
+var list =   document.getElementById('out_list')
+var list2 =   document.getElementById('output')
+
+ 
+//when list or list2 has children
+ if(list.firstChild || list2.firstChild){
+
+    while(list.hasChildNodes()) {   
+    list.removeChild(list.firstChild);
+
+    }
+  while(list2.hasChildNodes()) {   
+    list2.removeChild(list2.firstChild);
+    }
+  }    
+
+document.getElementById('clear_button').disabled = 1 //if there's nothing to clear
+  
+
+}
+</script>
+</head>
+<body>
+    <div id="first_chapter">
+        <h1 id="header">How to browse and modify the document</h1>
+        <p id="p1">First paragraph</p>
+        <p id="p2">Second paragraph</p>
+        <div>
+            <p id="p3">Here come a bit longer text</p>
+        </div>
+        <ul>
+            <li>Item 1</li>
+            <li>Item 2</li>
+            <li>Item 3</li>
+            <li>Item 4</li>
+        </ul>        
+    </div>
+    
+   
+    <button onclick="browse_elements(document.getElementById('first_chapter'),'output');">Browse</button>
+    <button onclick="add_elements(document.getElementById('first_chapter'), document.getElementById('out_list'));">Add elements example</button>
+
+<!--    <button onclick="clearadd_elements(document.getElementById('out_list'));" >Clear Added Elements</button> 
+    <button onclick="clearbrowse_elements('output');" >Clear Browsed Elements</button> -->
+    <button id= 'clear_button' onclick="clearall_elements( 'out_list', 'output');" disabled>Clear All Elements</button> 
+
+<div id="output"></div>
+
+    <ul id="out_list"></ul>
+
+</body>
+</html>
